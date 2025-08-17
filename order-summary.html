@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Summary | Pizza Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script src="js/order-summary.js"></script>
+</head>
+
+<body class="bg-green-50 text-gray-800 font-sans">
+
+  <!-- Header -->
+  <header class="bg-red-700 shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center p-4">
+       <img src="http://www.theexaminernews.com/examiner-news/wp-content/uploads/2012/01/Pizza_Hut.png" alt=""  class="w-20 md:w-22 h-auto object-contain" >
+       <h1 class="text-3xl font-extrabold text-white">Pizza Hut 🍕</h1> 
+      <div class="flex space-x-6 items-center">
+        <a href="index.html#menu" class="text-white text-lg hover:underline">Menu</a>
+        <a href="cart.html" class="relative text-white text-lg hover:underline">
+          Cart 🛒 <span id="cart-count" class="absolute -top-3 -right-4 bg-yellow-400 text-black rounded-full text-sm px-2">0</span>
+        </a>
+      </div>
+      <button id="menuToggle" class="md:hidden text-white text-2xl focus:outline-none"><i class="fas fa-bars"></i></button>
+    </div>
+    <div id="mobileMenu" class="hidden bg-red-500 flex flex-col p-4 space-y-3 md:hidden">
+      <a href="index.html#menu" class="text-white text-lg hover:underline">Menu</a>
+      <a href="cart.html" class="text-white text-lg hover:underline">Cart 🛒</a>
+    </div>
+  </header>
+
+  <!-- <main class="max-w-3xl mx-auto p-6 mt-10">
+    <h2 class="text-3xl font-bold text-center mb-10">Order Summary ✅</h2>
+    <div id="orderSummary" class="space-y-5"></div>
+    <div class="text-2xl font-bold mt-8 text-right" id="totalAmount"></div>
+    <div id="customerDetails" class="bg-white rounded-lg shadow-lg p-6 mt-10">
+      <h3 class="text-2xl font-semibold mb-4">Delivery Details 📦</h3>
+    </div>
+    <p class="text-center text-green-600 text-2xl mt-10 font-semibold">Thank you for your order! <i class="fa-solid fa-handshake"></i> </p>
+    <div class="text-center mt-8">
+      <a href="index.html" class="bg-blue-900 text-white py-3 px-6 rounded-lg hover:bg-blue-900 transition">Back to Home</a>
+    </div>
+  </main> -->
+
+<div class="max-w-3xl mx-auto p-6 bg-white rounded shadow space-y-8">
+  
+   <!-- 🏠 Address Section --> 
+  <div>
+    <h2 class="text-2xl font-bold mb-2">Delivery Address</h2>
+    <div id="customerDetails" class="text-gray-700 space-y-1"></div>
+  </div> 
+
+  <!-- 🛒 Ordered Items Section -->
+   <div>
+    <h2 class="text-2xl font-bold mb-2">Your Items</h2>
+    <div id="orderSummary" class="space-y-4"></div>
+  </div> 
+
+  <!-- 💰 Pricing Breakdown -->
+  <div>
+    <h2 class="text-2xl font-bold mb-2">Pricing Details</h2>
+    <div class="text-gray-700 space-y-2 text-lg">
+      <p>Subtotal: ₹<span id="subtotalAmount">0</span></p>
+      <p>Delivery Charges: ₹<span id="deliveryCharge">40</span></p>
+      <p>Tax (5%): ₹<span id="taxAmount">0</span></p>
+      <p>Discount: ₹<span id="discountAmount">20</span></p>
+      <hr class="my-2">
+      <p class="font-bold text-xl">Grand Total: ₹<span id="totalAmount">0</span></p>
+    </div>
+  </div> 
+      <div class="text-center mt-10">
+  <p class="text-green-600 text-2xl font-semibold mb-6">
+    Thank you for your order! <i class="fa-solid fa-handshake"></i>
+  </p>
+
+  <a
+    href="index.html"
+    class="inline-block bg-blue-600 text-white text-2xl font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition"
+  >
+    Back To Home
+  </a>
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+   <footer class="bg-red-600 text-white text-center py-4 w-full fixed bottom-0 left-0 z-50">
+  <p class="text-sm">&copy; 2025 Pizza Hut. All rights reserved.</p>
+  <div class="mt-2 space-x-6 text-xl">
+    <a href="#" class="hover:text-yellow-300"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="hover:text-yellow-300"><i class="fab fa-instagram"></i></a>
+    <a href="#" class="hover:text-yellow-300"><i class="fab fa-twitter"></i></a>
+  </div>
+</footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      protectPage();
+      document.getElementById("menuToggle").addEventListener("click", () => {
+        document.getElementById("mobileMenu").classList.toggle("hidden");
+      });
+    });
+  </script> 
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const payBtn = document.getElementById("payNowBtn");
+  const amountInput = document.getElementById("paymentAmount");
+
+  if (payBtn) {
+    payBtn.addEventListener("click", () => {
+      const amount = parseFloat(amountInput.value);
+      if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid amount");
+        return;
+      }
+
+      const options = {
+        key:rzp_test_pf37rZ5igSIK1e , // Replace with your Razorpay Test Key
+        amount: amount * 100, // Razorpay takes amount in paise
+        currency: "INR",
+        name: "Pizza Shop",
+        description: "Custom Amount Payment",
+        handler: function (response) {
+          alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+        },
+        theme: { color: "#3399cc" }
+      };
+
+      const rzp1 = new Razorpay(options);
+      rzp1.open();
+    });
+  }
+});
+</script>
+
+
+
+
+<!-- <script src="./js/app.js"></script>
+
+<script> 
+
+  document.getElementById("payNowBtn").addEventListener("click", function () {
+    // Get grandTotal from your existing DOM
+    let grandTotal = parseInt(document.getElementById("totalAmount").textContent) || 0;
+
+    // If no total, ask user to enter
+    if (!grandTotal || isNaN(grandTotal)) {
+        grandTotal = parseInt(prompt("Enter amount to pay:")) || 0;
+    }
+
+    if (grandTotal <= 0) {
+        alert("Invalid amount");
+        return;
+    }
+
+    // Open Razorpay checkout
+    var options = {
+        key:rzp_test_pf37rZ5igSIK1e , // test key for now
+        amount: grandTotal * 100, // amount in paise
+        currency: "INR",
+        name: "Pizza Hub",
+        description: "Order Payment",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Pizza_Hut_logo.svg/2560px-Pizza_Hut_logo.svg.png",
+        handler: function (response) {
+            alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+        },
+        prefill: {
+            name: "Customer Name",
+            email: "customer@example.com",
+            contact: "9999999999"
+        },
+        theme: {
+            color: "#F37254"
+        }
+    };
+    var rzp = new Razorpay(options);
+    rzp.open();
+});
+
+</script>
+
+    
+    
+</script>
+</body>
+</html> -->
+
+
+
+

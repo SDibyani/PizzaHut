@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chicken Burst Pizza</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-yJttZnLkhF4/9+g5Ag8co2nFt+/m2J3LM7+gK+3cPSopbZOH64V6rZpq1vS66fUhw2qg+X7X9roa7IexFO9nTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Back Arrow -->
+  <div class="p-4">
+    <a href="index.html" class="text-red-600 text-2xl hover:text-red-800 flex items-center">
+     <h1><i class="fa-solid fa-arrow-left"></i> </h1> 
+    </a>
+  </div>
+
+  <div class="flex items-center justify-center my-6">
+  <hr class="flex-grow border-t border-gray-400">
+  <span class="px-4 text-black-900 text-xl">Pizza Mania</span>
+  <hr class="flex-grow border-t border-gray-400">
+</div>
+
+
+  <!-- Pizza Info Section -->
+<div class="px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+      <!-- Pizza Card -->
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://www.sustainablecooks.com/wp-content/uploads/2022/12/FS-Onion-Pizza-3-1024x1536.jpg" alt="Onion"
+          class="w-full h-64 object-contain rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Onion</h3>
+          <p class="text-sm mt-1"></p>
+          <p class="text-lg mb-3">₹69</p>
+          <button onclick="addToCart('Onion', 69, 'https://www.sustainablecooks.com/wp-content/uploads/2022/12/FS-Onion-Pizza-3-1024x1536.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://d1bjorv296jxfn.cloudfront.net/s3fs-public/recipe-images/sargento/1916-Chorizo_and_Onion_Pizza.jpg" alt="Classic"
+          class="w-full h-64 object-contain rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Classic</h3>
+          <p class="text-sm mt-1"></p>
+          <p class="text-lg mb-3">₹49</p>
+          <button onclick="addToCart('Classic', 49, 'https://d1bjorv296jxfn.cloudfront.net/s3fs-public/recipe-images/sargento/1916-Chorizo_and_Onion_Pizza.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://recipes.timesofindia.com/thumb/53351352.cms?imgsize=151967&width=800&height=800" alt="Veg Loaded"
+          class="w-full h-64 object-contain rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Veg Loaded</h3>
+          <p class="text-sm mt-1"></p>
+          <p class="text-lg mb-3">₹189</p>
+          <button onclick="addToCart('Veg Loaded', 189, 'https://recipes.timesofindia.com/thumb/53351352.cms?imgsize=151967&width=800&height=800')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      
+
+
+
+
+</div>
+</div>
+<footer class="bg-red-600 text-white text-center py-4 w-full absolute bottom-0 left-0">
+  <p>&copy; 2025 Pizza Hub. All rights reserved.</p>
+</footer>
+
+
+
+
+  
+
+  <script>
+    function addToCart(name, price, image) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push({ name, price, image });
+  localStorage.setItem('cart', JSON.stringify(cart));
+  alert(`${name} added to cart!`);
+  updateCartCount();
+}
+  </script>
+</body>
+</html>

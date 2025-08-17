@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart | Pizza Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <script>protectPage();</script>
+
+  <!-- Header -->
+  <header class="bg-red-600 shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center p-4">
+       <img src="http://www.theexaminernews.com/examiner-news/wp-content/uploads/2012/01/Pizza_Hut.png" alt=""  class="w-20 md:w-22 h-auto object-contain" >
+      <!-- <h1 class="text-2xl md:text-3xl font-extrabold text-white">Pizza Hub 🍕</h1> -->
+
+      <div class="hidden md:flex space-x-6 items-center">
+        <a href="index.html#menu" class="text-white text-lg hover:underline">Menu</a>
+        <a href="cart.html" class="relative text-white text-lg hover:underline">
+          Cart 🛒
+          <span id="cart-count" class="absolute -top-3 -right-4 bg-yellow-400 text-black rounded-full text-xs px-2">0</span>
+        </a>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <button id="menuToggle" class="md:hidden text-white text-2xl focus:outline-none" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-red-500 flex flex-col p-4 space-y-3">
+      <a href="index.html#menu" class="text-white text-lg hover:underline">Menu</a>
+      <a href="cart.html" class="text-white text-lg hover:underline">
+        Cart 🛒 <span id="cart-count-mobile" class="bg-yellow-400 text-black rounded-full text-xs px-2 ml-1">0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Cart Section -->
+  <section class="max-w-4xl mx-auto p-6">
+    <h2 class="text-3xl font-bold text-center mb-8">Your Cart 🛒</h2>
+
+    <div id="cartItems" class="space-y-6"></div>
+
+    <div class="text-2xl font-bold mt-8 text-right" id="cartTotal">Total: ₹0</div>
+
+    <div class="text-center mt-8 space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row md:justify-center">
+      <a href="index.html" class="bg-gray-300 text-gray-800 py-2 px-5 rounded hover:bg-gray-400 transition">← Continue Shopping</a>
+      <a href="checkout.html" class="bg-green-600 text-white py-2 px-5 rounded hover:bg-green-700 transition">Proceed to Checkout</a>
+    </div>
+  </section>
+
+  
+
+  <footer class="bg-red-600 text-white text-center py-4 w-full fixed bottom-0 left-0 z-50">
+  <p class="text-sm">&copy; 2025 Pizza Hut. All rights reserved.</p>
+  <div class="mt-2 space-x-6 text-xl">
+    <a href="#" class="hover:text-yellow-300"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="hover:text-yellow-300"><i class="fab fa-instagram"></i></a>
+    <a href="#" class="hover:text-yellow-300"><i class="fab fa-twitter"></i></a>
+  </div>
+</footer>
+
+  
+
+  <script src="js/app.js"></script>
+</body>
+</html>

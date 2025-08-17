@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chicken Burst Pizza</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-yJttZnLkhF4/9+g5Ag8co2nFt+/m2J3LM7+gK+3cPSopbZOH64V6rZpq1vS66fUhw2qg+X7X9roa7IexFO9nTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Back Arrow -->
+  <div class="p-4">
+    <a href="index.html" class="text-red-600 text-2xl hover:text-red-800 flex items-center">
+     <h1><i class="fa-solid fa-arrow-left"></i> </h1> 
+    </a>
+  </div>
+
+  <div class="flex items-center justify-center my-6">
+  <hr class="flex-grow border-t border-gray-400">
+  <span class="px-4 text-black-900 text-xl">Cheese Volcano</span>
+  <hr class="flex-grow border-t border-gray-400">
+</div>
+
+
+  <!-- Pizza Info Section -->
+<div class="px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+      <!-- Pizza Card -->
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://goodyfeed.com/wp-content/uploads/2024/01/E553F107-C308-416E-BB72-7862B7BE74EE-scaled.jpeg" alt="Cheese Volcano Peppy Paneer"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Cheese Volcano Peppy Paneer</h3>
+          <p class="text-sm mt-1"></p>
+          <p class="text-lg mb-3">₹309</p>
+          <button onclick="addToCart('Cheese Volcano Peppy Paneer', 309, 'https://goodyfeed.com/wp-content/uploads/2024/01/E553F107-C308-416E-BB72-7862B7BE74EE-scaled.jpeg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://www.dominos.com.sg/ManagedAssets/SG/product/PXVH/SG_PXVH_en_hero_12860.jpg?v-1810547859" alt="Corn & Cheese Volcano"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Corn & Cheese Volcano</h3>
+          <p class="text-sm mt-1"></p>
+          <p class="text-lg mb-3">₹309</p>
+          <button onclick="addToCart('Corn & Cheese Volcano', 309, 'https://www.dominos.com.sg/ManagedAssets/SG/product/PXVH/SG_PXVH_en_hero_12860.jpg?v-1810547859')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://rhodesbakenserv.com/wp-content/uploads/2024/07/volcano-pizza-web-1024x685.jpg" alt="Cheese Volcano Chicken Delight"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Cheese Volcano Chicken Delight</h3>
+          <p class="text-sm mt-1"></p>
+          <p class="text-lg mb-3">₹359</p>
+          <button onclick="addToCart('Cheese Volcano Chicken Delight', 359, 'https://rhodesbakenserv.com/wp-content/uploads/2024/07/volcano-pizza-web-1024x685.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      
+
+
+
+
+</div>
+</div>
+<footer class="bg-red-600 text-white text-center py-4 w-full absolute bottom-0 left-0">
+  <p>&copy; 2025 Pizza Hub. All rights reserved.</p>
+</footer>
+
+
+
+
+  
+
+  <script>
+    function addToCart(name, price, image) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push({ name, price, image });
+  localStorage.setItem('cart', JSON.stringify(cart));
+  alert(`${name} added to cart!`);
+  updateCartCount();
+}
+  </script>
+</body>
+</html>

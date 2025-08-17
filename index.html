@@ -1,0 +1,484 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pizza Hut 🍕 | Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+    .no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.top10-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: gold;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      border-bottom-left-radius: 6px;
+    }
+    
+    
+</style>
+
+<body class="bg-gradient-to-br from-yellow-50 to-orange-100 text-gray-800 font-sans">
+
+  
+
+
+<!-- Header -->
+<header class="bg-red-600 shadow-lg sticky top-0 z-50">
+  <div class="container mx-auto flex justify-between items-center p-4">
+    <!-- Logo -->
+    <img src="http://www.theexaminernews.com/examiner-news/wp-content/uploads/2012/01/Pizza_Hut.png" 
+         alt="Pizza Hut Logo" 
+         class="w-20 md:w-22 h-auto object-contain">
+
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex space-x-6 items-center">
+      <a href="index.html#menu" class="text-white text-lg hover:underline">Menu</a>
+      <a href="cart.html" class="relative text-white text-lg hover:underline">
+        Cart 🛒 
+        <span id="cart-count" class="absolute -top-3 -right-4 bg-yellow-400 text-black rounded-full text-sm px-2">0</span>
+      </a>
+
+      <!-- 👤 Profile Icon (Shown only after login) -->
+      <div id="userProfileIcon" class="hidden text-white text-3xl cursor-pointer" onclick="openSidePanel()">
+        <i class="fas fa-user-circle"></i>
+      </div>
+
+      <!-- Login/Logout Area -->
+      <span id="userAreaHeader" class="text-white"></span>
+    </div>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button id="menuToggle" class="md:hidden text-white text-2xl focus:outline-none">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden fixed inset-0 bg-red-600 flex flex-col items-start p-6 space-y-6 z-50 md:hidden">
+    <button id="menuClose" class="text-white text-2xl self-end focus:outline-none">
+      <i class="fas fa-times"></i>
+    </button>
+    <a href="index.html#menu" class="text-white text-lg hover:underline">Menu</a>
+    <a href="cart.html" class="relative text-white text-lg hover:underline">
+      Cart 🛒 
+      <span id="cart-count-mobile" class="absolute -top-3 -right-4 bg-yellow-400 text-black rounded-full text-sm px-2">0</span>
+    </a>
+
+    <!-- 👤 Profile Icon for Mobile -->
+    <div id="userProfileIconMobile" class="hidden text-white text-3xl cursor-pointer" onclick="openSidePanel()">
+      <i class="fas fa-user-circle"></i>
+    </div>
+
+    <!-- Login/Logout Area Mobile -->
+    <div id="userAreaMobile" class="text-white space-y-2"></div>
+    
+
+  </div>
+</header>
+
+<!-- Overlay -->
+<div id="overlay" class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm z-40 hidden" onclick="closeSidePanel()" ></div>
+
+<!-- Side Panel -->
+<div id="sidePanel" class="fixed top-0 left-0 w-[300px] h-full bg-white shadow-lg transform -translate-x-full transition-transform duration-300 z-50">
+  <div class="flex justify-between items-center p-4 border-b">
+    <!-- <h2 class="text-xl font-bold">User Profile</h2> -->
+
+    <div class="flex items-center gap-4 p-4 border-b">
+  <!-- Profile Picture Circle -->
+  <div class="relative">
+    <img id="profilePic" src="https://www.pngitem.com/pimgs/m/514-5149286_profile-logo-hd-png-download.png" alt="Profile Picture"
+         class="w-16 h-16 rounded-full object-cover border-2 border-red-500 cursor-pointer" />
+    <input type="file" id="picInput" accept="image/*" class="hidden" />
+  </div>
+
+  <!-- Edit Profile Text -->
+  <div>
+    <p class="font-semibold text-lg">Edit Profile</p>
+    <button onclick="document.getElementById('picInput').click()" class="text-sm text-blue-600 hover:underline">Upload Photo</button>
+  </div>
+</div>
+
+    <button onclick="closeSidePanel()" class="text-gray-700 text-2xl">&times;</button>
+  </div>
+  <div class="p-4 space-y-3">
+    <p><strong>Name:</strong> <span id="profileName">Guest</span></p>
+    <p><strong>Email:</strong> <span id="profileEmail">N/A</span></p>
+    <div id="locationSection">
+  <p><strong>Location:</strong> <span id="userAddress">Detecting...</span></p>
+  <button id="setManualBtn" class="text-blue-600 underline text-sm mt-1">Not correct? Set manually</button>
+
+  <div id="manualInput" class="mt-2 hidden">
+    <input type="text" id="manualAddress" placeholder="Enter your address"
+           class="w-full border px-3 py-2 rounded mb-2" />
+    <button onclick="saveManualAddress()" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">Save</button>
+  </div>
+</div>
+    <p><strong>Deals & Offers</strong></p>
+    <p><strong>Track Current Order</strong></p>
+    <p><strong>Order History</strong></p>
+    <p><strong>Feedback</strong></p>
+    <p><strong>Terms & Conditions</strong></p>
+    <p><strong>Bulk Order</strong></p>
+    <p><strong>Nutritional Information</strong></p>
+    <button onclick="logoutUser()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full">Logout</button>
+  </div>
+</div>
+    
+
+  <!-- Hero Banner -->
+<section class="relative overflow-hidden">
+  <div class="relative group h-[100vh] md:h-[80vh] lg:h-[85vh]">
+    <img 
+      src="https://cdn.dribbble.com/users/6083074/screenshots/14808926/pizza-banner-design_4x.jpg"
+      alt="Pizza Banner" 
+      loading="lazy"
+      class="w-full h-full object-cover object-top transition-transform duration-700 ease-in-out group-hover:scale-105"
+    />
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col items-center justify-center px-4 text-center">
+      <h2 class="text-3xl md:text-5xl text-white font-extrabold leading-tight drop-shadow-md">
+        "Your Favorite Pizza, Just a Click Away!"
+      </h2>
+      <p class="text-white mt-2 text-lg md:text-xl max-w-xl">Hot. Fresh. Delicious – Every Slice Counts.</p>
+      <a href="#menu" class="mt-6 bg-red-600 text-black font-bold px-7 py-3 rounded-full hover:bg-yellow-300 transition shadow-md">
+        Order Now 
+      </a>
+    </div>
+  </div>
+</section>
+ 
+<div class="pt-4">
+<hr  class="border-t-8 border-white-400 my-8" >
+  </div>
+
+
+<section class="p-4">
+  <h1 class="text-2xl font-semibold mb-4">What are you craving for?</h1>
+
+  <!-- Scrollable Row -->
+  <div class="flex space-x-8 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory">
+    
+    <!-- Item -->
+    <a href="big-pizza.html" class="flex-shrink-0 w-32 text-center snap-start">
+      <img src="https://tse1.mm.bing.net/th?id=OIP.teMOBnBMUBaCB0VN7-2sEgHaEJ&pid=Api&P=0&h=180"
+           class="w-24 h-24 rounded-full object-cover mx-auto hover:opacity-90 transition duration-300" />
+      <h3 class="mt-2 text-sm text-red-700 hover:underline">Big Big Pizza</h3>
+    </a>
+
+    <!-- Item -->
+    <a href="chicken-burst.html" class="flex-shrink-0 w-32 text-center snap-start">
+      <img src="https://www.tasteofhome.com/wp-content/uploads/2017/10/Pesto-Chicken-Pizza_exps39454_CFD1646754D1_RMS.jpg"
+           class="w-24 h-24 rounded-full object-cover mx-auto hover:opacity-90 transition duration-300" />
+      <h3 class="mt-2 text-sm text-red-700 hover:underline">Chicken Burst</h3>
+    </a>
+
+    <a href="course-meal.html" class="flex-shrink-0 w-32 text-center snap-start">
+      <img src="https://i.ytimg.com/vi/vm_UFRFQKbc/oardefault.jpg"
+           class="w-24 h-24 rounded-full object-cover mx-auto hover:opacity-90 transition duration-300" />
+      <h3 class="mt-2 text-sm text-red-700 hover:underline">5 Course Meal</h3>
+    </a>
+
+    <a href="veg-pizza.html" class="flex-shrink-0 w-32 text-center snap-start">
+      <img src="https://tse4.mm.bing.net/th?id=OIP.nWxwqZPLh0yhD3YoK8Ee7QHaE7&pid=Api&P=0&h=180" "
+           class="w-24 h-24 rounded-full object-cover mx-auto hover:opacity-90 transition duration-300" />
+      <h3 class="mt-2 text-sm text-red-700 hover:underline">Veg Pizza</h3>
+    </a>
+
+    <a href="cheese-volcano.html" class="flex-shrink-0 w-32 text-center snap-start">
+      <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/FOOD_CATALOG/IMAGES/CMS/2024/7/4/3e08f33d-98b7-41d2-acca-182da98e80f4_dd0b2e67-2a47-4a5e-b906-63e1277e7fa2.jpg"
+           class="w-24 h-24 rounded-full object-cover mx-auto hover:opacity-90 transition duration-300" />
+      <h3 class="mt-2 text-sm text-red-700 hover:underline">Cheese Volcano</h3>
+    </a>
+
+    <a href="pizza-mania.html" class="flex-shrink-0 w-32 text-center snap-start">
+      <img src="https://tse1.mm.bing.net/th?id=OIP.GtG0utA7lecZMaO_sUJ8MQHaFv&pid=Api&P=0&h=180"
+           class="w-24 h-24 rounded-full object-cover mx-auto hover:opacity-90 transition duration-300" />
+      <h3 class="mt-2 text-sm text-red-700 hover:underline">Pizza Mania</h3>
+    </a>
+
+    <a href="bread.html" class="flex-shrink-0 w-32 text-center snap-start">
+      <img src="https://tse2.mm.bing.net/th?id=OIP.Dj_XZJc_wHnroUzMiVGzMwHaLG&pid=Api&P=0&h=180"
+           class="w-24 h-24 rounded-full object-cover mx-auto hover:opacity-90 transition duration-300" />
+      <h3 class="mt-2 text-sm text-red-700 hover:underline">Garlic Breads & More</h3>
+    </a>
+
+    <a href="beverage.html" class="flex-shrink-0 w-32 text-center snap-start">
+      <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/5307ef37224391.57397a56d79da.jpg"
+           class="w-24 h-24 rounded-full object-cover mx-auto hover:opacity-90 transition duration-300" />
+      <h3 class="mt-2 text-sm text-red-700 hover:underline">Beverages</h3>
+    </a>
+
+    <a href="spicy.html" class="flex-shrink-0 w-32 text-center snap-start">
+      <img src="https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/216054.jpg"
+           class="w-24 h-24 rounded-full object-cover mx-auto hover:opacity-90 transition duration-300" />
+      <h3 class="mt-2 text-sm text-red-700 hover:underline">Spicy Pizza</h3>
+    </a>
+
+
+    <!-- Add more items in the same format... -->
+
+  </div>
+</section>
+
+
+<section class="p-4 pl-4">
+  <h1 class="text-xl font-semibold mb-4 pl-2">What's New</h1>
+
+  <div class="flex gap-12 overflow-x-auto no-scrollbar">
+    <div class="flex-shrink-0 w-60">
+     <a href="veg-pizza.html"><img src="https://tse2.mm.bing.net/th?id=OIP.VCLBpPuc9_MLJuOK1CSiiwHaHa&pid=Api&P=0&h=180" alt="" class="w-full h-36 object-cover rounded-lg shadow" /></a> 
+    </div>
+    <div class="flex-shrink-0 w-60 ml-4 gap-2">
+      <a href="chicken-burst.html"><img src="https://tse4.mm.bing.net/th?id=OIP.nGE_7MpDwmqMbVJ8QCqXfAHaHa&pid=Api&P=0&h=180" alt="" class="w-full h-36 object-cover rounded-lg shadow" /></a>
+    </div>
+    <div class="flex-shrink-0 w-60 pl-2">
+      <a href="cheese-volcano.html"><img src="https://www.dominos.jp/media/k44nzp1u/kv_tb_en.jpg" alt="" class="w-full h-36 object-cover rounded-lg shadow" /></a>
+    </div>
+    <div class="flex-shrink-0 w-60 pl-2">
+     <a href="lavalicious.html"><img src="https://tse2.mm.bing.net/th?id=OIP.pXeRBILQ7w_gsqumdmFuWQHaDO&pid=Api&P=0&h=180" alt="" class="w-full h-36 object-cover rounded-lg shadow" /></a> 
+    </div>
+    <div class="flex-shrink-0 w-60 pl-2">
+     <a href="veg-pizza.html"><img src="https://tse3.mm.bing.net/th?id=OIP.4vUAeWK2hJxCcj3fZ4GjvgAAAA&pid=Api&P=0&h=180" alt="" class="w-full h-36 object-cover rounded-lg shadow" /></a> 
+    </div>
+  </div>
+  </section>
+
+  <section class="pt-6 bg-yellow-50 min-h-screen">
+  <!-- Crown + Heading Centered -->
+  <div class="flex flex-col items-center text-center mb-8">
+    <img
+      src="https://static.vecteezy.com/system/resources/previews/000/576/961/original/gold-royal-crown-logo-template-illustration-design-vector-eps-10.jpg"
+      alt="Crown Logo"
+      class="w-20 h-20 object-contain mb-2"
+    />
+    <h1 class="text-2xl font-bold">
+      <span class="text-yellow-400">Top 10</span>
+      <span class="text-yellow-700">Bestsellers</span>
+    </h1>
+    <p class="text-sm text-gray-600">In Your Locality</p>
+  </div>
+
+  <!-- Cards Container -->
+  <div class="px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+      <!-- Pizza Card -->
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://d2lswn7b0fl4u2.cloudfront.net/photos/pg-margherita-pizza-1611491820.jpg" alt="Margherita"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Margherita</h3>
+          <p class="text-sm mt-1">Classic delight with 100% real mozzarella cheese.</p>
+          <p class="text-lg mb-3">₹109</p>
+          <button onclick="addToCart('Margherita', 109, 'https://d2lswn7b0fl4u2.cloudfront.net/photos/pg-margherita-pizza-1611491820.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://tse4.mm.bing.net/th?id=OIP.iMtAxo2Y4OAxump1BSQb8gHaE8&pid=Api&P=0&h=180" alt="Farmhouse"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Farmhouse</h3>
+          <p class="text-sm mt-1">Delightful combination of onion, capsicum, tomato & grilled mushroom.</p>
+          <p class="text-lg mb-3">₹259</p>
+          <button onclick="addToCart('Farmhouse', 259, 'https://tse4.mm.bing.net/th?id=OIP.iMtAxo2Y4OAxump1BSQb8gHaE8&pid=Api&P=0&h=180')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://images.dominos.co.in/IndianTandooriPaneer.jpg" alt="Farmhouse"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Indi Tandoori Paneer</h3>
+          <p class="text-sm mt-1">It is hot. It is spicy.  Tandoori paneer with capsicum, red paprika & mint mayo.</p>
+          <p class="text-lg mb-3">₹300</p>
+          <button onclick="addToCart('Farmhouse', 300, 'https://images.dominos.co.in/IndianTandooriPaneer.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://product-assets.faasos.io/production/product/image_1669628712219_Low_IFC_Corn_and_Cheese_Pizza.jpg" alt="Farmhouse"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Golden Corn</h3>
+          <p class="text-sm mt-1">Sweet & juicy golden corn for that lipsmacking taste.</p>
+          <p class="text-lg mb-3">₹300</p>
+          <button onclick="addToCart('Farmhouse', 300, 'https://product-assets.faasos.io/production/product/image_1669628712219_Low_IFC_Corn_and_Cheese_Pizza.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://www.sustainablecooks.com/wp-content/uploads/2022/12/FS-Onion-Pizza-3-1024x1536.jpg" alt="Farmhouse"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Onion</h3>
+          <p class="text-sm mt-1">Our classic Pizza Mania topped with crunchy Onions.</p>
+          <p class="text-lg mb-3">₹300</p>
+          <button onclick="addToCart('Farmhouse', 300, 'https://www.sustainablecooks.com/wp-content/uploads/2022/12/FS-Onion-Pizza-3-1024x1536.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://www.yellowblissroad.com/wp-content/uploads/2021/11/Homemade-Breadsticks-lg-21.jpg" alt="Farmhouse"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Garlic Breadsticks</h3>
+           <p class="text-sm mt-1">Baked to perfection. Your perfect pizza partner! Taste best with dip.</p>
+          <p class="text-lg mb-3">₹300</p>
+          <button onclick="addToCart('Farmhouse', 300, 'https://www.yellowblissroad.com/wp-content/uploads/2021/11/Homemade-Breadsticks-lg-21.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+  
+
+
+      <!-- You can duplicate the card block above for more items -->
+
+    </div>
+  </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="max-w-7xl mx-auto px-6 py-14">
+    <h2 class="text-4xl font-bold mb-10 text-center text-gray-800 drop-shadow">🍕 Popular Pizza Delights</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+
+      <!-- Pizza Cards (1–8) -->
+      <!-- Pizza 1 -->
+      <div class="bg-white border rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://image.brigitte.de/11576686/t/cb/v3/w960/r1/-/pizza-margherita.jpg" alt="Margherita"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Margherita</h3>
+          <p class="text-lg mb-3">₹250</p>
+          <button onclick="addToCart('Margherita', 250, 'https://image.brigitte.de/11576686/t/cb/v3/w960/r1/-/pizza-margherita.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Pizza 2 -->
+      <div class="bg-white border rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="http://3.bp.blogspot.com/-GEdhjxzjzVs/UpD3OFVvl8I/AAAAAAAAAQI/ZlVGqNDCvIM/s1600/Recipe-of-farmhouse-pizza-food-factory.jpg" alt="Farmhouse"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Farmhouse</h3>
+          <p class="text-lg mb-3">₹300</p>
+          <button onclick="addToCart('Farmhouse', 300, 'http://3.bp.blogspot.com/-GEdhjxzjzVs/UpD3OFVvl8I/AAAAAAAAAQI/ZlVGqNDCvIM/s1600/Recipe-of-farmhouse-pizza-food-factory.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Pizza 3 -->
+      <div class="bg-white border rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://i.pinimg.com/originals/93/43/2a/93432a121ea16dded6e55d418702e291.jpg"
+          alt="Peppy Paneer" class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Peppy Paneer</h3>
+          <p class="text-lg mb-3">₹350</p>
+          <button onclick="addToCart('Peppy Paneer', 350, 'https://i.pinimg.com/originals/93/43/2a/93432a121ea16dded6e55d418702e291.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Pizza 4 -->
+      <div class="bg-white border rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://tse3.mm.bing.net/th?id=OIP.L6FZ0EnHckPd9Se-Lk4VwwHaEJ&pid=Api&P=0&h=180"
+          alt="Cheese Burst" class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Cheese Burst</h3>
+          <p class="text-lg mb-3">₹400</p>
+          <button onclick="addToCart('Cheese Burst', 400, 'https://tse3.mm.bing.net/th?id=OIP.L6FZ0EnHckPd9Se-Lk4VwwHaEJ&pid=Api&P=0&h=180')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Pizza 5 -->
+      <div class="bg-white border rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/80355befb12f52c22eb75c6f865ca328"
+          alt="Veggie Paradise" class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Veggie Paradise</h3>
+          <p class="text-lg mb-3">₹280</p>
+          <button onclick="addToCart('Veggie Paradise', 280, 'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/80355befb12f52c22eb75c6f865ca328')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Pizza 6 -->
+      <div class="bg-white border rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://img.freepik.com/premium-photo/pizza-homemade-double-cheese_43137-188.jpg"
+          alt="Double Cheese" class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Double Cheese</h3>
+          <p class="text-lg mb-3">₹320</p>
+          <button onclick="addToCart('Double Cheese', 320, 'https://img.freepik.com/premium-photo/pizza-homemade-double-cheese_43137-188.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Pizza 7 -->
+      <div class="bg-white border rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://4.bp.blogspot.com/-wHbTvKSOJGE/Uvk3B7O0QuI/AAAAAAAAB50/kaLvl-BT8qM/s1600/IMG_0708.JPG"
+          alt="Mexican Delight" class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Mexican Delight</h3>
+          <p class="text-lg mb-3">₹360</p>
+          <button onclick="addToCart('Mexican Delight', 360, 'https://4.bp.blogspot.com/-wHbTvKSOJGE/Uvk3B7O0QuI/AAAAAAAAB50/kaLvl-BT8qM/s1600/IMG_0708.JPG')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Pizza 8 -->
+      <div class="bg-white border rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://img.freepik.com/premium-photo/chicken-supreme-pizza-isolated-cutting-board-top-view-dark-background-italian-fast-food_689047-3743.jpg"
+          alt="Chicken Supreme" class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Chicken Supreme</h3>
+          <p class="text-lg mb-3">₹400</p>
+          <button onclick="addToCart('Chicken Supreme', 400, 'https://img.freepik.com/premium-photo/chicken-supreme-pizza-isolated-cutting-board-top-view-dark-background-italian-fast-food_689047-3743.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+   <!-- Footer -->
+  <footer class="bg-gradient-to-r from-red-600 to-red-700 text-white text-center py-6 mt-16">
+    <p>&copy; 2025 Pizza Hut. All rights reserved.</p>
+    <div class="mt-3 space-x-6 text-2xl">
+      <a href="#" class="hover:text-yellow-300"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="hover:text-yellow-300"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="hover:text-yellow-300"><i class="fab fa-twitter"></i></a>
+    </div>
+  </footer>
+
+  
+
+
+  <script src="js/app.js"></script>
+  <script>
+    document.getElementById("menuToggle").addEventListener("click", () => {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
+    });
+
+  </script>
+</body>
+</html>

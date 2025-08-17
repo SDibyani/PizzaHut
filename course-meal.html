@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chicken Burst Pizza</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-yJttZnLkhF4/9+g5Ag8co2nFt+/m2J3LM7+gK+3cPSopbZOH64V6rZpq1vS66fUhw2qg+X7X9roa7IexFO9nTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Back Arrow -->
+  <div class="p-4">
+    <a href="index.html" class="text-red-600 text-2xl hover:text-red-800 flex items-center">
+     <h1><i class="fa-solid fa-arrow-left"></i> </h1> 
+    </a>
+  </div>
+
+  <div class="flex items-center justify-center my-6">
+  <hr class="flex-grow border-t border-gray-400">
+  <span class="px-4 text-black-900 text-xl">Course Meal</span>
+  <hr class="flex-grow border-t border-gray-400">
+</div>
+
+
+  <!-- Pizza Info Section -->
+<div class="px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+      <!-- Pizza Card -->
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://www.dominos.co.nz/ManagedAssets/NZ/combo/84636/NZ_84636_en_MenuImage_12178.png?v907398220" alt="Golden Corn Pizza"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Golden Corn Pizza</h3>
+          <p class="text-sm mt-1"></p>
+          <p class="text-lg mb-3">₹149</p>
+          <button onclick="addToCart('Golden Corn Pizza', 109, 'https://www.dominos.co.nz/ManagedAssets/NZ/combo/84636/NZ_84636_en_MenuImage_12178.png?v907398220')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://www.mashed.com/img/gallery/dominos-introduced-a-3-course-meal-pizza-but-only-in-this-country/l-intro-1638817727.jpg" alt="Pepper BBQ Pizza"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Pepper BBQ Pizza</h3>
+          <p class="text-sm mt-1"></p>
+          <p class="text-lg mb-3">₹149</p>
+          <button onclick="addToCart('Pepper BBQ Pizza', 149, 'https://www.mashed.com/img/gallery/dominos-introduced-a-3-course-meal-pizza-but-only-in-this-country/l-intro-1638817727.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      <div class="bg-white  rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+        <img src="https://www.thedailymeal.com/img/gallery/13-mistakes-youre-probably-making-with-your-dominos-order/intro-1681402350.jpg" alt="Onion Pizza"
+          class="w-full h-64 object-cover rounded-t-xl">
+        <div class="p-4 text-center">
+          <h3 class="text-xl font-bold mb-2">Onion Pizza</h3>
+          <p class="text-sm mt-1"></p>
+          <p class="text-lg mb-3">₹149</p>
+          <button onclick="addToCart('Onion Pizza', 149, 'https://www.thedailymeal.com/img/gallery/13-mistakes-youre-probably-making-with-your-dominos-order/intro-1681402350.jpg')"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg">Add to Cart</button>
+        </div>
+      </div>
+      
+
+
+
+
+</div>
+</div>
+<footer class="bg-red-600 text-white text-center py-4 w-full absolute bottom-0 left-0">
+  <p>&copy; 2025 Pizza Hub. All rights reserved.</p>
+</footer>
+
+
+
+
+  
+
+  <script>
+    function addToCart(name, price, image) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push({ name, price, image });
+  localStorage.setItem('cart', JSON.stringify(cart));
+  alert(`${name} added to cart!`);
+  updateCartCount();
+}
+  </script>
+</body>
+</html>
